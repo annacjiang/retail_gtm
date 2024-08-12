@@ -1,0 +1,54 @@
+version: 2
+models:
+  - name: pos_unified_funnel_ltv_ttest
+    description: '{{ doc("pos_unified_funnel_ltv_ttest") }}'
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - subject_id
+            - experiment_handle
+    docs:
+      show: true
+    config:
+      meta:
+        enable_sdp_processing: true
+        is_public: true
+        asset_uri:
+          <a href="https://github.com/annacjiang/retail_gtm/blob/main/exp/README.md">Plus
+          POS Unified Funnel LTV T-Test</a>
+        is_deprecated: false
+        owner:
+          email: anna.jiang@shopify.com
+          slack: anna.jiang
+          github: annacjiang
+        confidence: 0
+        criticality: 5
+        short_description: Table in the ExP TTest metric style containing estimated LTV value per user for Unified Funnel Test.
+        governance:
+          data_category: analytically_modeled
+    columns:
+      - name: experiment_handle
+        data_type: STRING
+        description: Handle of the Experiment
+        meta:
+          display_name: Experiment Handle
+      - name: variant
+        data_type: STRING
+        description: Variant received by the experiment subject
+        meta:
+          display_name: Variant
+      - name: subject_id
+        data_type: STRING
+        description: The unique identifier of the subject
+        meta:
+          display_name: Subject ID
+      - name: first_assigned_at
+        data_type: TIMESTAMP
+        description:
+          The timestamp of first assignment in sdp-prd-experiments.marts.experiment_assignments
+          (from upstream monorail_experiment_assignments_shopify_owned_pii_1).
+        meta:
+          display_name: First Assigned At
+      - name: value
+        data_type: INT
+        description: "Dollar amount (USD) associated with the estimated LTV of the subject during the experiment"
